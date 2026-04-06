@@ -2,6 +2,52 @@
 // BALOU TATTOO — Script
 // ============================================
 
+// --- Galerie Instagram (Behold.so feed) ---
+async function loadInstagram() {
+  const grid = document.getElementById('igGrid');
+  if (!grid) return;
+
+  try {
+    const res  = await fetch('https://feeds.behold.so/sqFxCkjri8mRpJyX2YJO');
+    const data = await res.json();
+    const posts = data.posts || data;
+
+    grid.innerHTML = '';
+
+    posts.forEach(post => {
+      const img = post.sizes?.medium?.mediaUrl || post.thumbnailUrl || post.mediaUrl;
+      if (!img) return;
+
+      const isVideo    = post.mediaType === 'VIDEO';
+      const isCarousel = post.mediaType === 'CAROUSEL_ALBUM';
+      const caption    = post.prunedCaption || post.caption || '';
+
+      const item = document.createElement('a');
+      item.className = 'ig-item';
+      item.href      = post.permalink;
+      item.target    = '_blank';
+      item.rel       = 'noopener';
+
+      item.innerHTML = `
+        <img src="${img}" alt="${caption.slice(0, 80)}" loading="lazy" />
+        ${isVideo    ? '<span class="ig-type">▶ Reel</span>' : ''}
+        ${isCarousel ? '<span class="ig-type">⊞</span>' : ''}
+        <div class="ig-overlay">
+          ${caption ? `<p class="ig-caption">${caption}</p>` : ''}
+        </div>
+      `;
+
+      grid.appendChild(item);
+    });
+
+  } catch (err) {
+    const grid = document.getElementById('igGrid');
+    if (grid) grid.innerHTML = '<p class="ig-loading">Impossible de charger le feed Instagram.</p>';
+  }
+}
+
+loadInstagram();
+
 // --- Nav scroll ---
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
