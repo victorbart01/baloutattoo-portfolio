@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Générateur de Devis — Balou Tattoo</title>
+<style>
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:   #0a0a0a;
+  --dark:    #111;
+  --dark2:   #1a1a1a;
+  --border:  #2a2a2a;
+  --muted:   #555;
+  --light:   #999;
+  --white:   #f0ede8;
+  --accent:  #c9a96e;
+  --green:   #4a7c59;
+  --red:     #8b3a3a;
+  --font-serif: 'Georgia', serif;
+  --font-sans:  system-ui, -apple-system, sans-serif;
+}
+
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.app {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  min-height: 100vh;
+}
+
+/* PANEL GAUCHE — Formulaire */
+.panel-form {
+  background: var(--dark);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 2.5rem 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+/* PANEL DROIT — Aperçu */
+.panel-preview {
+  padding: 2.5rem 2rem;
+  overflow-y: auto;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.app-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+
+.app-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* =============================================
+   FORMULAIRE
+   ============================================= */
+.form-section {
+  margin-bottom: 1.8rem;
+}
+
+.form-section-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-group:last-child { margin-bottom: 0; }
+
+label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+input, select, textarea {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+input::placeholder, textarea::placeholder { color: var(--muted); }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+select option { background: var(--dark2); }
+textarea { resize: vertical; min-height: 70px; }
+
+/* Slider */
+.slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+input[type="range"] {
+  flex: 1;
+  padding: 0;
+  height: 4px;
+  background: var(--border);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.slider-val {
+  font-size: 1rem;
+  font-family: var(--font-serif);
+  color: var(--accent);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* Complexity radio */
+.radio-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.radio-btn {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.radio-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(201,169,110,0.08);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+  border-radius: 3px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-primary { background: var(--accent); color: var(--black); font-weight: 600; }
+.btn-primary:hover { background: #d4b47a; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--light);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-danger { background: var(--red); color: var(--white); }
+.btn-danger:hover { background: #a04444; }
+
+/* =============================================
+   PRIX ESTIMÉ LIVE
+   ============================================= */
+.price-live {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.price-live-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.price-live-amount {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--accent);
+  font-weight: normal;
+}
+
+.price-live-range {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.pb-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--light);
+}
+
+.pb-row.total {
+  color: var(--white);
+  font-weight: 500;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.3rem;
+}
+
+/* =============================================
+   APERÇU DEVIS
+   ============================================= */
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.preview-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.preview-actions .btn {
+  width: auto;
+  margin-top: 0;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.7rem;
+}
+
+/* DEVIS — le document imprimable */
+#quote {
+  background: #fff;
+  color: #1a1a1a;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 3.5rem;
+  border-radius: 4px;
+  font-family: 'Georgia', serif;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+#quote::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #c9a96e, #8b6f47);
+}
+
+/* En-tête devis */
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8e4de;
+}
+
+.q-logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.q-logo-name {
+  font-size: 2rem;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.q-logo-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a96e;
+  margin-top: 0.3rem;
+}
+
+.q-logo-sub {
+  font-size: 0.72rem;
+  color: #888;
+  margin-top: 0.5rem;
+  font-family: system-ui, sans-serif;
+  font-style: normal;
+}
+
+.q-meta {
+  text-align: right;
+  font-family: system-ui, sans-serif;
+}
+
+.q-devis-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.q-devis-num {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  letter-spacing: 0.05em;
+  margin: 0.2rem 0;
+}
+
+.q-date {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+/* Infos client */
+.q-parties {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.q-party-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-family: system-ui, sans-serif;
+  margin-bottom: 0.6rem;
+}
+
+.q-party-name {
+  font-size: 1.05rem;
+  color: #1a1a1a;
+  font-weight: normal;
+  margin-bottom: 0.2rem;
+}
+
+.q-party-info {
+  font-size: 0.8rem;
+  color: #666;
+  font-family: system-ui, sans-serif;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+/* Description projet */
+.q-project {
+  background: #faf8f5;
+  border: 1px solid #e8e4de;
+  border-radius: 3px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.q-project-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-family: system-ui, sans-serif;
+  margin-bottom: 0.8rem;
+}
+
+.q-project-title {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.q-project-desc {
+  font-size: 0.83rem;
+  color: #555;
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+.q-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.q-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid #d4b47a;
+  color: #b8964a;
+  border-radius: 2px;
+  font-family: system-ui, sans-serif;
+}
+
+/* Tableau tarif */
+.q-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-family: system-ui, sans-serif;
+}
+
+.q-table th {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #aaa;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #e8e4de;
+  text-align: left;
+  font-weight: 400;
+}
+
+.q-table th:last-child, .q-table td:last-child { text-align: right; }
+
+.q-table td {
+  padding: 0.75rem 0.8rem;
+  font-size: 0.83rem;
+  color: #333;
+  border-bottom: 1px solid #f0ede8;
+  vertical-align: top;
+}
+
+.q-table td:first-child { color: #1a1a1a; font-weight: 500; }
+
+.q-table tr:last-child td { border-bottom: none; }
+
+/* Totaux */
+.q-totals {
+  margin-left: auto;
+  width: 280px;
+  margin-bottom: 2rem;
+}
+
+.q-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 0;
+  font-size: 0.83rem;
+  font-family: system-ui, sans-serif;
+  color: #555;
+  border-bottom: 1px solid #f0ede8;
+}
+
+.q-total-row.main {
+  font-size: 1.05rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  border-bottom: 2px solid #1a1a1a;
+  padding-top: 0.6rem;
+}
+
+.q-total-row.acompte {
+  color: #c9a96e;
+  font-weight: 500;
+  border-bottom: none;
+  font-size: 0.9rem;
+}
+
+/* Conditions */
+.q-conditions {
+  background: #faf8f5;
+  border: 1px solid #e8e4de;
+  border-radius: 3px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.q-conditions-title {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-family: system-ui, sans-serif;
+  margin-bottom: 0.8rem;
+}
+
+.q-conditions ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.q-conditions li {
+  font-size: 0.75rem;
+  color: #666;
+  font-family: system-ui, sans-serif;
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.q-conditions li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #c9a96e;
+}
+
+/* Footer devis */
+.q-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e8e4de;
+  font-family: system-ui, sans-serif;
+}
+
+.q-footer-note {
+  font-size: 0.7rem;
+  color: #aaa;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.q-signature {
+  text-align: right;
+}
+
+.q-signature-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 2.5rem;
+}
+
+.q-signature-line {
+  width: 150px;
+  height: 1px;
+  background: #ccc;
+  margin-left: auto;
+}
+
+.q-signature-name {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.3rem;
+}
+
+/* Empty state */
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--muted);
+  text-align: center;
+  gap: 0.8rem;
+}
+
+.preview-empty-icon {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.preview-empty-text {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   IMPRESSION / PDF
+   ============================================= */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  body { background: #fff !important; }
+
+  .panel-form, .preview-header { display: none !important; }
+
+  .app { display: block; }
+
+  .panel-preview {
+    padding: 0;
+    overflow: visible;
+  }
+
+  #quote {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    padding: 2rem 2.5rem !important;
+  }
+
+  #quote::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ==========================================
+       PANNEAU FORMULAIRE
+       ========================================== -->
+  <aside class="panel-form">
+
+    <div class="app-header">
+      <div class="app-title">Balou Tattoo</div>
+      <div class="app-sub">Générateur de devis</div>
+    </div>
+
+    <!-- Prix live -->
+    <div class="price-live">
+      <div class="price-live-label">Estimation tarifaire</div>
+      <div class="price-live-amount" id="livePrice">— €</div>
+      <div class="price-live-range" id="liveRange"></div>
+      <div class="price-breakdown" id="priceBreakdown" style="display:none">
+        <div class="pb-row"><span>Base (taille)</span><span id="pbBase">—</span></div>
+        <div class="pb-row"><span>Style</span><span id="pbStyle">—</span></div>
+        <div class="pb-row"><span>Zone</span><span id="pbZone">—</span></div>
+        <div class="pb-row"><span>Complexité</span><span id="pbComplex">—</span></div>
+        <div class="pb-row total"><span>Total estimé</span><span id="pbTotal">—</span></div>
+        <div class="pb-row" style="color:var(--accent)"><span>Acompte (30%)</span><span id="pbAcompte">—</span></div>
+      </div>
+    </div>
+
+    <!-- Infos client -->
+    <div class="form-section">
+      <div class="form-section-title">Client</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="clientName">Nom complet *</label>
+          <input type="text" id="clientName" placeholder="Prénom Nom" />
+        </div>
+        <div class="form-group">
+          <label for="clientEmail">Email *</label>
+          <input type="email" id="clientEmail" placeholder="email@exemple.com" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="clientPhone">Téléphone</label>
+        <input type="tel" id="clientPhone" placeholder="+33 6 00 00 00 00" />
+      </div>
+    </div>
+
+    <!-- Projet -->
+    <div class="form-section">
+      <div class="form-section-title">Projet tatouage</div>
+      <div class="form-group">
+        <label for="tattooDesc">Description *</label>
+        <textarea id="tattooDesc" placeholder="Ex: Mandala géométrique avec ornements floraux, style symétrique..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tattooStyle">Style *</label>
+          <select id="tattooStyle">
+            <option value="">Choisir</option>
+            <option value="blackwork">Blackwork</option>
+            <option value="realisme">Réalisme</option>
+            <option value="neotrad">Néo-traditionnel</option>
+            <option value="mandala">Mandala / Géométrique</option>
+            <option value="minimaliste">Minimaliste / Fine line</option>
+            <option value="lettering">Lettering</option>
+            <option value="japonais">Japonais / Irezumi</option>
+            <option value="ornamental">Ornamental</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tattooZone">Zone du corps *</label>
+          <select id="tattooZone">
+            <option value="">Choisir</option>
+            <option value="avant-bras">Avant-bras</option>
+            <option value="bras">Bras entier</option>
+            <option value="epaule">Épaule</option>
+            <option value="dos">Dos (partiel)</option>
+            <option value="dos-complet">Dos complet</option>
+            <option value="torse">Torse / Poitrine</option>
+            <option value="jambe">Jambe / Cuisse</option>
+            <option value="cotes">Côtes / Flanc</option>
+            <option value="main">Main / Doigts</option>
+            <option value="cou">Cou</option>
+            <option value="cheville">Cheville / Pied</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taille -->
+    <div class="form-section">
+      <div class="form-section-title">Dimensions</div>
+      <div class="form-group">
+        <label>Taille approximative — <span id="sizeLabel">10 cm</span></label>
+        <div class="slider-wrap">
+          <span style="font-size:0.7rem;color:var(--muted)">2cm</span>
+          <input type="range" id="tattooSize" min="2" max="60" value="10" step="1" />
+          <span style="font-size:0.7rem;color:var(--muted)">60cm</span>
+          <span class="slider-val" id="sizeVal">10</span><span style="font-size:0.7rem;color:var(--muted)">cm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complexité -->
+    <div class="form-section">
+      <div class="form-section-title">Complexité</div>
+      <div class="form-group">
+        <label>Niveau de détail</label>
+        <div class="radio-group">
+          <div class="radio-btn active" data-val="simple">Simple</div>
+          <div class="radio-btn" data-val="moyen">Moyen</div>
+          <div class="radio-btn" data-val="complexe">Complexe</div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:0.75rem">
+        <label>Nombre de séances estimé — <span id="sessionsLabel">1</span></label>
+        <div class="slider-wrap">
+          <span style="font-size:0.7rem;color:var(--muted)">1</span>
+          <input type="range" id="sessions" min="1" max="10" value="1" step="1" />
+          <span style="font-size:0.7rem;color:var(--muted)">10</span>
+          <span class="slider-val" id="sessionsVal">1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="form-section">
+      <div class="form-section-title">Options</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="devisNum">N° devis</label>
+          <input type="text" id="devisNum" placeholder="Auto" />
+        </div>
+        <div class="form-group">
+          <label for="devisDate">Date</label>
+          <input type="date" id="devisDate" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notes">Notes internes</label>
+        <textarea id="notes" rows="2" placeholder="Références, inspirations, contraintes..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="generateBtn">Générer le devis</button>
+    <button class="btn btn-ghost" id="resetBtn" style="margin-top:0.5rem">Réinitialiser</button>
+
+  </aside>
+
+  <!-- ==========================================
+       PANNEAU APERÇU
+       ========================================== -->
+  <main class="panel-preview">
+
+    <div class="preview-header">
+      <div class="preview-title">Aperçu du devis</div>
+      <div class="preview-actions" id="previewActions" style="display:none">
+        <button class="btn btn-ghost" id="printBtn">🖨 Imprimer</button>
+        <button class="btn btn-primary" id="pdfBtn">⬇ Exporter PDF</button>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="preview-empty" id="emptyState">
+      <div class="preview-empty-icon">✦</div>
+      <div class="preview-empty-text">Remplis le formulaire et clique sur<br><strong>Générer le devis</strong></div>
+    </div>
+
+    <!-- Le devis -->
+    <div id="quoteWrap" style="display:none">
+      <div id="quote">
+
+        <!-- En-tête -->
+        <div class="q-header">
+          <div class="q-logo">
+            <div class="q-logo-name">BALOU</div>
+            <div class="q-logo-tag">Tattoo Artist</div>
+            <div class="q-logo-sub">
+              Instagram : @balou_tattoo.ink<br>
+              Paris · Thaïlande<br>
+              baloutattoo.ink
+            </div>
+          </div>
+          <div class="q-meta">
+            <div class="q-devis-label">Devis n°</div>
+            <div class="q-devis-num" id="qNum">—</div>
+            <div class="q-date" id="qDate">—</div>
+            <div class="q-date" style="margin-top:0.3rem;font-size:0.68rem;color:#bbb">Valable 30 jours</div>
+          </div>
+        </div>
+
+        <!-- Parties -->
+        <div class="q-parties">
+          <div>
+            <div class="q-party-label">Tatoueur</div>
+            <div class="q-party-name">Balou</div>
+            <div class="q-party-info">
+              Tatoueur indépendant<br>
+              Paris · Thaïlande<br>
+              @balou_tattoo.ink
+            </div>
+          </div>
+          <div>
+            <div class="q-party-label">Client</div>
+            <div class="q-party-name" id="qClientName">—</div>
+            <div class="q-party-info" id="qClientInfo">—</div>
+          </div>
+        </div>
+
+        <!-- Projet -->
+        <div class="q-project">
+          <div class="q-project-label">Description du projet</div>
+          <div class="q-project-title" id="qProjectTitle">—</div>
+          <div class="q-project-desc" id="qProjectDesc">—</div>
+          <div class="q-tags" id="qTags"></div>
+        </div>
+
+        <!-- Tableau -->
+        <table class="q-table">
+          <thead>
+            <tr>
+              <th>Prestation</th>
+              <th>Détail</th>
+              <th>Séances</th>
+              <th>Prix</th>
+            </tr>
+          </thead>
+          <tbody id="qTableBody">
+          </tbody>
+        </table>
+
+        <!-- Totaux -->
+        <div class="q-totals">
+          <div class="q-total-row"><span>Sous-total</span><span id="qSubtotal">—</span></div>
+          <div class="q-total-row main"><span>Total TTC</span><span id="qTotal">—</span></div>
+          <div class="q-total-row acompte"><span>Acompte à verser (30%)</span><span id="qAcompte">—</span></div>
+          <div class="q-total-row"><span>Solde le jour J</span><span id="qSolde">—</span></div>
+        </div>
+
+        <!-- Conditions -->
+        <div class="q-conditions">
+          <div class="q-conditions-title">Conditions générales</div>
+          <ul>
+            <li>Un acompte de 30% est demandé pour confirmer la réservation. Il est non remboursable en cas d'annulation moins de 48h avant la séance.</li>
+            <li>Une retouche gratuite est incluse dans les 3 mois suivant la séance (hors zones déconseillées : mains, doigts, pieds).</li>
+            <li>Le design définitif est présenté le jour J. Des modifications mineures sont possibles sur place.</li>
+            <li>Le devis est établi sur la base des informations fournies. Toute modification significative du projet peut entraîner une révision tarifaire.</li>
+            <li>Ce devis est valable 30 jours à compter de sa date d'émission.</li>
+            <li>Le solde est réglé à la fin de chaque séance, en espèces ou par virement.</li>
+          </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="q-footer">
+          <div class="q-footer-note">
+            Merci de votre confiance.<br>
+            Pour toute question : @balou_tattoo.ink
+          </div>
+          <div class="q-signature">
+            <div class="q-signature-label">Bon pour accord</div>
+            <div class="q-signature-line"></div>
+            <div class="q-signature-name">Signature client</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// =============================================
+// GRILLE TARIFAIRE
+// =============================================
+
+// Prix de base au cm (€)
+function basePricePerCm(size) {
+  if (size <= 5)  return 25;   // très petit
+  if (size <= 10) return 20;   // petit
+  if (size <= 20) return 16;   // moyen
+  if (size <= 35) return 13;   // grand
+  return 10;                    // très grand (dos complet etc.)
+}
+
+// Multiplicateurs style
+const styleMultiplier = {
+  blackwork:    1.0,
+  realisme:     1.6,
+  neotrad:      1.25,
+  mandala:      1.2,
+  minimaliste:  0.85,
+  lettering:    0.8,
+  japonais:     1.4,
+  ornamental:   1.15,
+};
+
+const styleNames = {
+  blackwork:   'Blackwork',
+  realisme:    'Réalisme',
+  neotrad:     'Néo-traditionnel',
+  mandala:     'Mandala / Géométrique',
+  minimaliste: 'Minimaliste / Fine line',
+  lettering:   'Lettering',
+  japonais:    'Japonais / Irezumi',
+  ornamental:  'Ornamental',
+};
+
+// Multiplicateurs zone
+const zoneMultiplier = {
+  'avant-bras':   1.0,
+  'bras':         1.1,
+  'epaule':       1.0,
+  'dos':          1.1,
+  'dos-complet':  1.2,
+  'torse':        1.1,
+  'jambe':        1.0,
+  'cotes':        1.3,
+  'main':         1.35,
+  'cou':          1.4,
+  'cheville':     1.1,
+};
+
+const zoneNames = {
+  'avant-bras':  'Avant-bras',
+  'bras':        'Bras entier',
+  'epaule':      'Épaule',
+  'dos':         'Dos (partiel)',
+  'dos-complet': 'Dos complet',
+  'torse':       'Torse / Poitrine',
+  'jambe':       'Jambe / Cuisse',
+  'cotes':       'Côtes / Flanc',
+  'main':        'Main / Doigts',
+  'cou':         'Cou',
+  'cheville':    'Cheville / Pied',
+};
+
+// Multiplicateurs complexité
+const complexMultiplier = { simple: 1.0, moyen: 1.35, complexe: 1.75 };
+
+function calcPrice(size, style, zone, complexity) {
+  if (!size || !style || !zone || !complexity) return null;
+
+  const base     = basePricePerCm(size) * size;
+  const sM       = styleMultiplier[style]    || 1;
+  const zM       = zoneMultiplier[zone]      || 1;
+  const cM       = complexMultiplier[complexity] || 1;
+
+  const total = Math.round(base * sM * zM * cM / 10) * 10;
+
+  return {
+    base:    Math.round(base),
+    style:   Math.round(base * sM) - Math.round(base),
+    zone:    Math.round(base * sM * zM) - Math.round(base * sM),
+    complex: Math.round(base * sM * zM * cM) - Math.round(base * sM * zM),
+    total:   total,
+    min:     Math.round(total * 0.9),
+    max:     Math.round(total * 1.15),
+  };
+}
+
+function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
+
+// =============================================
+// STATE
+// =============================================
+let complexity = 'simple';
+let generated  = false;
+
+// =============================================
+// INTERACTIONS FORMULAIRE
+// =============================================
+
+// Slider taille
+const sizeInput = document.getElementById('tattooSize');
+document.getElementById('sizeLabel').textContent = sizeInput.value + ' cm';
+document.getElementById('sizeVal').textContent   = sizeInput.value;
+
+sizeInput.addEventListener('input', () => {
+  document.getElementById('sizeLabel').textContent = sizeInput.value + ' cm';
+  document.getElementById('sizeVal').textContent   = sizeInput.value;
+  updateLivePrice();
+});
+
+// Slider séances
+const sessionsInput = document.getElementById('sessions');
+document.getElementById('sessionsLabel').textContent = sessionsInput.value;
+document.getElementById('sessionsVal').textContent   = sessionsInput.value;
+
+sessionsInput.addEventListener('input', () => {
+  document.getElementById('sessionsLabel').textContent = sessionsInput.value;
+  document.getElementById('sessionsVal').textContent   = sessionsInput.value;
+});
+
+// Radio complexité
+document.querySelectorAll('.radio-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.radio-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    complexity = btn.dataset.val;
+    updateLivePrice();
+  });
+});
+
+// Style & Zone → update prix
+document.getElementById('tattooStyle').addEventListener('change', updateLivePrice);
+document.getElementById('tattooZone').addEventListener('change', updateLivePrice);
+
+function updateLivePrice() {
+  const size  = parseInt(sizeInput.value);
+  const style = document.getElementById('tattooStyle').value;
+  const zone  = document.getElementById('tattooZone').value;
+  const p     = calcPrice(size, style, zone, complexity);
+
+  const livePrice = document.getElementById('livePrice');
+  const liveRange = document.getElementById('liveRange');
+  const breakdown = document.getElementById('priceBreakdown');
+
+  if (!p) {
+    livePrice.textContent = '— €';
+    liveRange.textContent = '';
+    breakdown.style.display = 'none';
+    return;
+  }
+
+  livePrice.textContent = fmt(p.total);
+  liveRange.textContent = `Fourchette : ${fmt(p.min)} – ${fmt(p.max)}`;
+  breakdown.style.display = 'flex';
+
+  document.getElementById('pbBase').textContent    = fmt(p.base);
+  document.getElementById('pbStyle').textContent   = p.style >= 0 ? '+' + fmt(p.style) : fmt(p.style);
+  document.getElementById('pbZone').textContent    = p.zone >= 0  ? '+' + fmt(p.zone)  : fmt(p.zone);
+  document.getElementById('pbComplex').textContent = p.complex >= 0 ? '+' + fmt(p.complex) : fmt(p.complex);
+  document.getElementById('pbTotal').textContent   = fmt(p.total);
+  document.getElementById('pbAcompte').textContent = fmt(Math.round(p.total * 0.3 / 10) * 10);
+}
+
+// Date par défaut
+const today = new Date();
+document.getElementById('devisDate').valueAsDate = today;
+
+// N° devis auto
+function genNum() {
+  const d = today;
+  return 'BT-' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '-' + String(Math.floor(Math.random()*900)+100);
+}
+document.getElementById('devisNum').placeholder = genNum();
+
+// =============================================
+// GÉNÉRATION DU DEVIS
+// =============================================
+document.getElementById('generateBtn').addEventListener('click', generateQuote);
+
+function generateQuote() {
+  const name  = document.getElementById('clientName').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  const desc  = document.getElementById('tattooDesc').value.trim();
+  const style = document.getElementById('tattooStyle').value;
+  const zone  = document.getElementById('tattooZone').value;
+  const size  = parseInt(sizeInput.value);
+  const sess  = parseInt(sessionsInput.value);
+  const notes = document.getElementById('notes').value.trim();
+
+  if (!name || !email || !desc || !style || !zone) {
+    alert('Merci de remplir tous les champs obligatoires (*).');
+    return;
+  }
+
+  const p = calcPrice(size, style, zone, complexity);
+  if (!p) return;
+
+  const num  = document.getElementById('devisNum').value || document.getElementById('devisNum').placeholder;
+  const date = document.getElementById('devisDate').value
+    ? new Date(document.getElementById('devisDate').value).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })
+    : today.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+
+  const acompte = Math.round(p.total * 0.3 / 10) * 10;
+  const solde   = p.total - acompte;
+
+  // Remplir le devis
+  document.getElementById('qNum').textContent       = num;
+  document.getElementById('qDate').textContent      = 'Émis le ' + date;
+  document.getElementById('qClientName').textContent = name;
+  document.getElementById('qClientInfo').innerHTML  = email + (document.getElementById('clientPhone').value ? '<br>' + document.getElementById('clientPhone').value : '');
+
+  document.getElementById('qProjectTitle').textContent = styleNames[style] + ' — ' + zoneNames[zone];
+  document.getElementById('qProjectDesc').textContent  = desc + (notes ? '\n\nNotes : ' + notes : '');
+
+  // Tags
+  const tagsEl = document.getElementById('qTags');
+  tagsEl.innerHTML = '';
+  [styleNames[style], zoneNames[zone], size + ' cm', complexity.charAt(0).toUpperCase() + complexity.slice(1), sess + ' séance' + (sess > 1 ? 's' : '')].forEach(t => {
+    const el = document.createElement('span');
+    el.className = 'q-tag';
+    el.textContent = t;
+    tagsEl.appendChild(el);
+  });
+
+  // Tableau
+  const pricePerSession = Math.round(p.total / sess / 10) * 10;
+  document.getElementById('qTableBody').innerHTML = `
+    <tr>
+      <td>Tatouage ${styleNames[style]}</td>
+      <td>${zoneNames[zone]}<br><small style="color:#888">${size} cm · Complexité ${complexity}</small></td>
+      <td style="text-align:center">${sess}</td>
+      <td>${fmt(p.total)}</td>
+    </tr>
+    ${sess > 1 ? `<tr><td colspan="2" style="color:#888;font-size:0.78rem">Soit ${fmt(pricePerSession)} / séance</td><td></td><td></td></tr>` : ''}
+  `;
+
+  document.getElementById('qSubtotal').textContent = fmt(p.total);
+  document.getElementById('qTotal').textContent    = fmt(p.total);
+  document.getElementById('qAcompte').textContent  = fmt(acompte);
+  document.getElementById('qSolde').textContent    = fmt(solde);
+
+  // Afficher
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('quoteWrap').style.display  = 'block';
+  document.getElementById('previewActions').style.display = 'flex';
+
+  // Scroll vers le devis
+  document.getElementById('quoteWrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+// =============================================
+// IMPRESSION / PDF
+// =============================================
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+document.getElementById('pdfBtn').addEventListener('click', () => {
+  // Utilise la boîte de dialogue d'impression avec destination PDF
+  const originalTitle = document.title;
+  const name = document.getElementById('clientName').value.trim() || 'client';
+  const num  = document.getElementById('devisNum').value || document.getElementById('devisNum').placeholder;
+  document.title = `Devis_BalouTattoo_${name}_${num}`;
+  window.print();
+  document.title = originalTitle;
+});
+
+// =============================================
+// RESET
+// =============================================
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('Réinitialiser le formulaire ?')) return;
+  document.getElementById('clientName').value  = '';
+  document.getElementById('clientEmail').value = '';
+  document.getElementById('clientPhone').value = '';
+  document.getElementById('tattooDesc').value  = '';
+  document.getElementById('tattooStyle').value = '';
+  document.getElementById('tattooZone').value  = '';
+  document.getElementById('notes').value       = '';
+  sizeInput.value    = 10;
+  sessionsInput.value = 1;
+  document.getElementById('sizeLabel').textContent    = '10 cm';
+  document.getElementById('sizeVal').textContent      = '10';
+  document.getElementById('sessionsLabel').textContent = '1';
+  document.getElementById('sessionsVal').textContent   = '1';
+  document.getElementById('devisNum').value = '';
+  document.querySelectorAll('.radio-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.radio-btn[data-val="simple"]').classList.add('active');
+  complexity = 'simple';
+  document.getElementById('livePrice').textContent = '— €';
+  document.getElementById('liveRange').textContent = '';
+  document.getElementById('priceBreakdown').style.display = 'none';
+  document.getElementById('emptyState').style.display  = 'flex';
+  document.getElementById('quoteWrap').style.display   = 'none';
+  document.getElementById('previewActions').style.display = 'none';
+});
+</script>
+</body>
+</html>
