@@ -535,6 +535,26 @@ a {
 .lightbox-next:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ============================================
+   INSTAGRAM
+   ============================================ */
+
+.instagram {
+  padding: var(--section-pad) clamp(1.5rem, 5vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+
+.instagram-feed {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+behold-widget {
+  --behold-font-family: 'Inter', system-ui, sans-serif;
+  --behold-background-color: transparent;
+  display: block;
+}
+
+/* ============================================
    ABOUT
    ============================================ */
 
