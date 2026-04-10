@@ -8,13 +8,27 @@
   const video  = document.getElementById('intro-video');
   const skip   = document.getElementById('intro-skip');
 
+  if (!screen) return;
+
   function closeIntro() {
     screen.classList.add('fade-out');
     screen.addEventListener('transitionend', () => screen.remove(), { once: true });
   }
 
-  video.addEventListener('ended', closeIntro);
-  skip.addEventListener('click', closeIntro);
+  if (video) {
+    video.addEventListener('ended', closeIntro);
+    // Si la vidéo ne se charge pas (fichier absent), skip auto après 1s
+    video.addEventListener('error', () => setTimeout(closeIntro, 800));
+    // Sécurité : skip auto si la vidéo dépasse 15s
+    video.addEventListener('loadedmetadata', () => {
+      if (video.duration > 15) setTimeout(closeIntro, 15000);
+    });
+  } else {
+    // Pas de vidéo du tout → skip immédiat
+    setTimeout(closeIntro, 300);
+  }
+
+  if (skip) skip.addEventListener('click', closeIntro);
 })();
 
 // --- Galerie Instagram (Behold.so feed) ---
@@ -104,81 +118,83 @@ filterBtns.forEach(btn => {
   });
 });
 
-// --- Lightbox ---
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
+// --- Lightbox (optionnelle — active uniquement si présente dans le HTML) ---
+const lightbox     = document.getElementById('lightbox');
+const lightboxImg  = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
 const lightboxNext = document.getElementById('lightboxNext');
 
-let currentImages = [];
-let currentIndex = 0;
+if (lightbox && lightboxImg) {
+  let currentImages = [];
+  let currentIndex  = 0;
 
-function getVisibleImages() {
-  return Array.from(document.querySelectorAll('.gallery-item:not(.hidden) .gallery-card img'));
-}
-
-function openLightbox(img) {
-  currentImages = getVisibleImages();
-  currentIndex = currentImages.indexOf(img);
-  lightboxImg.src = img.src;
-  lightboxImg.alt = img.alt;
-  lightbox.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  document.body.style.overflow = '';
-  lightboxImg.src = '';
-}
-
-function showNext() {
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  lightboxImg.src = currentImages[currentIndex].src;
-  lightboxImg.alt = currentImages[currentIndex].alt;
-}
-
-function showPrev() {
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  lightboxImg.src = currentImages[currentIndex].src;
-  lightboxImg.alt = currentImages[currentIndex].alt;
-}
-
-document.querySelectorAll('.gallery-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const img = card.querySelector('img');
-    if (img && img.src && !img.src.endsWith('/')) openLightbox(img);
-  });
-});
-
-lightboxClose.addEventListener('click', closeLightbox);
-lightboxNext.addEventListener('click', showNext);
-lightboxPrev.addEventListener('click', showPrev);
-
-lightbox.addEventListener('click', e => {
-  if (e.target === lightbox) closeLightbox();
-});
-
-document.addEventListener('keydown', e => {
-  if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowRight') showNext();
-  if (e.key === 'ArrowLeft') showPrev();
-});
-
-// --- Swipe sur mobile (lightbox) ---
-let touchStartX = 0;
-lightbox.addEventListener('touchstart', e => {
-  touchStartX = e.touches[0].clientX;
-}, { passive: true });
-lightbox.addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0) showNext();
-    else showPrev();
+  function getVisibleImages() {
+    return Array.from(document.querySelectorAll('.gallery-item:not(.hidden) .gallery-card img'));
   }
-}, { passive: true });
+
+  function openLightbox(img) {
+    currentImages = getVisibleImages();
+    currentIndex  = currentImages.indexOf(img);
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    lightboxImg.src = currentImages[currentIndex].src;
+    lightboxImg.alt = currentImages[currentIndex].alt;
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    lightboxImg.src = currentImages[currentIndex].src;
+    lightboxImg.alt = currentImages[currentIndex].alt;
+  }
+
+  document.querySelectorAll('.gallery-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img');
+      if (img && img.src && !img.src.endsWith('/')) openLightbox(img);
+    });
+  });
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxNext)  lightboxNext.addEventListener('click', showNext);
+  if (lightboxPrev)  lightboxPrev.addEventListener('click', showPrev);
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft')  showPrev();
+  });
+
+  // Swipe mobile
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) showNext();
+      else showPrev();
+    }
+  }, { passive: true });
+}
 
 // --- Formulaire booking (Formspree) ---
 // Remplacer VOTRE_ID_FORMSPREE dans index.html par ton vrai ID
