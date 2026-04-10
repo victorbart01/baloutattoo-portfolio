@@ -2,6 +2,21 @@
 // BALOU TATTOO — Script
 // ============================================
 
+// --- Intro vidéo ---
+(function () {
+  const screen = document.getElementById('intro-screen');
+  const video  = document.getElementById('intro-video');
+  const skip   = document.getElementById('intro-skip');
+
+  function closeIntro() {
+    screen.classList.add('fade-out');
+    screen.addEventListener('transitionend', () => screen.remove(), { once: true });
+  }
+
+  video.addEventListener('ended', closeIntro);
+  skip.addEventListener('click', closeIntro);
+})();
+
 // --- Galerie Instagram (Behold.so feed) ---
 async function loadInstagram() {
   const grid = document.getElementById('igGrid');
@@ -165,9 +180,11 @@ lightbox.addEventListener('touchend', e => {
   }
 }, { passive: true });
 
-// --- Formulaire booking ---
+// --- Formulaire booking (Formspree) ---
+// Remplacer VOTRE_ID_FORMSPREE dans index.html par ton vrai ID
+// (créer un compte sur formspree.io, ajouter un formulaire → copier l'ID)
 const form = document.getElementById('bookingForm');
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
 
   const name    = form.name.value.trim();
@@ -179,14 +196,34 @@ form.addEventListener('submit', e => {
     return;
   }
 
-  // Pour une vraie intégration : remplace par Formspree, EmailJS, ou ton backend
-  // Exemple Formspree : form.action = 'https://formspree.io/f/VOTRE_ID'
-  // Ici on simule juste un retour visuel :
   const btn = form.querySelector('button[type="submit"]');
-  btn.textContent = 'Message envoyé ✓';
+  btn.textContent = 'Envoi en cours…';
   btn.disabled = true;
-  btn.style.background = '#4a7c59';
-  btn.style.color = '#fff';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      btn.textContent = 'Message envoyé ✓';
+      btn.style.background = '#4a7c59';
+      btn.style.color = '#fff';
+      form.reset();
+    } else {
+      const data = await res.json();
+      const errMsg = data?.errors?.map(e => e.message).join(', ') || 'Erreur inconnue';
+      btn.textContent = 'Réessayer';
+      btn.disabled = false;
+      alert('Erreur : ' + errMsg);
+    }
+  } catch {
+    btn.textContent = 'Réessayer';
+    btn.disabled = false;
+    alert('Connexion impossible. Merci de contacter via Instagram.');
+  }
 });
 
 // --- Apparition au scroll (Intersection Observer) ---

@@ -44,6 +44,14 @@
 </head>
 <body>
 
+  <!-- INTRO VIDEO -->
+  <div id="intro-screen">
+    <video id="intro-video" autoplay muted playsinline>
+      <source src="IMG_6212.mov" type="video/mp4" />
+    </video>
+    <button id="intro-skip">Passer →</button>
+  </div>
+
   <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="#hero" class="nav-logo">BALOU</a>
@@ -66,7 +74,9 @@
 
   <!-- HERO -->
   <section class="hero" id="hero">
-    <div class="hero-bg"></div>
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="IMG_6212.mov" type="video/mp4" />
+    </video>
     <div class="hero-content">
       <p class="hero-eyebrow">Tatoueur · Paris &amp; Thaïlande</p>
       <h1 class="hero-title">Balou<br /><em>Tattoo</em></h1>
@@ -172,7 +182,9 @@
           <li><span class="bi-icon">✏️</span> Design 100% sur-mesure</li>
         </ul>
       </div>
-      <form class="booking-form" id="bookingForm" novalidate>
+      <form class="booking-form" id="bookingForm"
+            action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
+            method="POST" novalidate>
         <div class="form-group">
           <label for="name">Nom complet</label>
           <input type="text" id="name" name="name" placeholder="Votre nom" required />

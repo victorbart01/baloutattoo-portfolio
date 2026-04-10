@@ -53,6 +53,57 @@ a {
 }
 
 /* ============================================
+   INTRO SCREEN
+   ============================================ */
+
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#intro-video {
+  width: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+#intro-skip {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  background: transparent;
+  border: 1px solid rgba(240,237,232,0.3);
+  color: rgba(240,237,232,0.6);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#intro-skip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================
    SCROLLBAR
    ============================================ */
 
@@ -207,7 +258,8 @@ a {
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -215,19 +267,13 @@ a {
   padding: 0 clamp(1.5rem, 5vw, 3rem);
 }
 
-.hero-bg {
+.hero-video {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,169,110,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at 20% 70%, rgba(201,169,110,0.04) 0%, transparent 50%);
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
 }
 
 .hero-content {
