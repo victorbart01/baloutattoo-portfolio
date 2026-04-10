@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <rect width="500" height="500" fill="white"/>
+  <g transform="translate(250,250)" fill="none" stroke="#111" stroke-width="0.8">
+    <!-- Géométrique sacré / Fleur de vie -->
+    <circle cx="0" cy="0" r="6" fill="#111" stroke="none"/>
+    <!-- Triangle étoile central -->
+    <polygon points="0,-50 43,25 -43,25" stroke-width="1"/>
+    <polygon points="0,50 43,-25 -43,-25" stroke-width="1"/>
+    <circle cx="0" cy="0" r="55"/>
+    <!-- 6 pétales en amande -->
+    <path d="M0,-55 C30,-30 30,30 0,55 C-30,30 -30,-30 0,-55Z"/>
+    <path d="M0,-55 C30,-30 30,30 0,55 C-30,30 -30,-30 0,-55Z" transform="rotate(60)"/>
+    <path d="M0,-55 C30,-30 30,30 0,55 C-30,30 -30,-30 0,-55Z" transform="rotate(120)"/>
+    <!-- Hexagone externe -->
+    <polygon points="0,-90 78,-45 78,45 0,90 -78,45 -78,-45" stroke-width="1"/>
+    <!-- Cercles aux sommets de l'hexagone -->
+    <circle cx="0" cy="-90" r="10"/>
+    <circle cx="78" cy="-45" r="10"/>
+    <circle cx="78" cy="45" r="10"/>
+    <circle cx="0" cy="90" r="10"/>
+    <circle cx="-78" cy="45" r="10"/>
+    <circle cx="-78" cy="-45" r="10"/>
+    <!-- Lignes du hexagone vers centre -->
+    <line x1="0" y1="-55" x2="0" y2="-80"/>
+    <line x1="0" y1="-55" x2="0" y2="-80" transform="rotate(60)"/>
+    <line x1="0" y1="-55" x2="0" y2="-80" transform="rotate(120)"/>
+    <line x1="0" y1="-55" x2="0" y2="-80" transform="rotate(180)"/>
+    <line x1="0" y1="-55" x2="0" y2="-80" transform="rotate(240)"/>
+    <line x1="0" y1="-55" x2="0" y2="-80" transform="rotate(300)"/>
+    <!-- Grand cercle -->
+    <circle cx="0" cy="0" r="105"/>
+    <!-- Losanges externes -->
+    <g>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none"/>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none" transform="rotate(60)"/>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none" transform="rotate(120)"/>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none" transform="rotate(180)"/>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none" transform="rotate(240)"/>
+      <path d="M0,-110 L12,-130 L0,-150 L-12,-130 Z" fill="#111" stroke="none" transform="rotate(300)"/>
+    </g>
+    <!-- Étoile à 6 branches externe -->
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(30)"/>
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(90)"/>
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(150)"/>
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(210)"/>
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(270)"/>
+    <polygon points="0,-165 15,-140 0,-115 -15,-140" transform="rotate(330)"/>
+    <circle cx="0" cy="0" r="172"/>
+    <!-- Bordure -->
+    <circle cx="0" cy="0" r="185" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="190" stroke-width="0.5"/>
+    <!-- Points de finition -->
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(30)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(60)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(90)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(120)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(150)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(180)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(210)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(240)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(270)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(300)"/>
+    <circle cx="0" cy="-187" r="2.5" fill="#111" stroke="none" transform="rotate(330)"/>
+  </g>
+</svg>

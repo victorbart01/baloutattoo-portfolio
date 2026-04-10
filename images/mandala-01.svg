@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <rect width="500" height="500" fill="white"/>
+  <g transform="translate(250,250)" fill="none" stroke="#111" stroke-width="1">
+    <!-- Centre -->
+    <circle cx="0" cy="0" r="8" fill="#111"/>
+    <circle cx="0" cy="0" r="14"/>
+    <circle cx="0" cy="0" r="24"/>
+    <!-- Anneau de points internes -->
+    <g>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(45)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(90)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(135)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(180)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(225)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(270)"/>
+      <circle cx="0" cy="-35" r="2.5" fill="#111" stroke="none" transform="rotate(315)"/>
+    </g>
+    <circle cx="0" cy="0" r="44"/>
+    <!-- Pétales intérieures -->
+    <g>
+      <ellipse cx="0" cy="-60" rx="10" ry="18"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-60" rx="10" ry="18" transform="rotate(315)"/>
+    </g>
+    <circle cx="0" cy="0" r="80"/>
+    <!-- Lignes radiales moyennes -->
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(22.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(67.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(112.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(157.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(202.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(247.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(292.5)"/>
+    <line x1="0" y1="-80" x2="0" y2="-100" transform="rotate(337.5)"/>
+    <!-- Grandes pétales -->
+    <g>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(45)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(90)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(135)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(180)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(225)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(270)"/>
+      <path d="M0,-85 C18,-105 18,-135 0,-155 C-18,-135 -18,-105 0,-85 Z" transform="rotate(315)"/>
+    </g>
+    <circle cx="0" cy="0" r="164"/>
+    <!-- Anneau de points externes -->
+    <g>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(22.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(45)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(67.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(90)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(112.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(135)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(157.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(180)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(202.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(225)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(247.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(270)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(292.5)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(315)"/>
+      <circle cx="0" cy="-178" r="3" fill="#111" stroke="none" transform="rotate(337.5)"/>
+    </g>
+    <circle cx="0" cy="0" r="190"/>
+    <circle cx="0" cy="0" r="196" stroke-width="0.5"/>
+  </g>
+</svg>

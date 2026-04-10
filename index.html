@@ -11,176 +11,176 @@
   <meta name="author" content="Balou Tattoo" />
   <link rel="canonical" href="https://baloutattoo.ink" />
 
-  <!-- Open Graph (partage réseaux sociaux) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Balou Tattoo — Mandala & Ornamental" />
   <meta property="og:description" content="Tatoueur spécialisé en mandala, géométrique et ornamental. Paris · Thaïlande. Booking ouvert." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://baloutattoo.ink" />
   <meta property="og:image" content="https://baloutattoo.ink/images/og-cover.jpg" />
 
-  <!-- Schema.org structured data (Google) -->
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Balou Tattoo",
-    "description": "Tatoueur spécialisé en mandala, géométrique et ornamental. Grand format, manches complètes.",
+    "description": "Tatoueur spécialisé en mandala, géométrique et ornamental.",
     "url": "https://baloutattoo.ink",
     "sameAs": ["https://www.instagram.com/balou_tattoo.ink/"],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Paris",
-      "addressCountry": "FR"
-    },
-    "priceRange": "€€€",
-    "image": "https://baloutattoo.ink/images/og-cover.jpg"
+    "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" },
+    "priceRange": "€€€"
   }
   </script>
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- INTRO VIDEO -->
-  <div id="intro-screen">
+  <!-- CURSEUR FLEUR DE VIE -->
+  <div id="cursor">
+    <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="0.6">
+      <circle cx="19" cy="19"    r="6.5"/>
+      <circle cx="19" cy="12.5"  r="6.5"/>
+      <circle cx="24.63" cy="15.75" r="6.5"/>
+      <circle cx="24.63" cy="22.25" r="6.5"/>
+      <circle cx="19" cy="25.5"  r="6.5"/>
+      <circle cx="13.37" cy="22.25" r="6.5"/>
+      <circle cx="13.37" cy="15.75" r="6.5"/>
+      <circle cx="19" cy="19" r="13" stroke-width="0.5"/>
+      <circle cx="19"    cy="5.5"  r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="30.02" cy="11.5" r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="30.02" cy="26.5" r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="19"    cy="32.5" r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="7.98"  cy="26.5" r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="7.98"  cy="11.5" r="1.1" fill="#fff" stroke="none"/>
+      <circle cx="19" cy="19" r="1.5" fill="#fff" stroke="none"/>
+      <circle cx="19" cy="19" r="17.5" stroke-width="0.4" stroke-dasharray="1.5,2.5"/>
+    </svg>
+  </div>
+
+  <!-- FOND VIDÉO (fixe, persiste au scroll) -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="IMG_6212.mov" type="video/mp4" />
+  </video>
+
+  <!-- INTRO VIDÉO -->
+  <div id="intro">
     <video id="intro-video" autoplay muted playsinline>
       <source src="IMG_6212.mov" type="video/mp4" />
     </video>
     <button id="intro-skip">Passer →</button>
   </div>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <a href="#hero" class="nav-logo">BALOU</a>
-    <ul class="nav-links">
-      <li><a href="#gallery">Galerie</a></li>
-      <li><a href="#about">À propos</a></li>
-      <li><a href="#booking" class="nav-cta">Booking</a></li>
-    </ul>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#gallery" class="mobile-link">Galerie</a>
-    <a href="#about" class="mobile-link">À propos</a>
-    <a href="#booking" class="mobile-link">Booking</a>
-  </div>
-
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="IMG_6212.mov" type="video/mp4" />
-    </video>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Tatoueur · Paris &amp; Thaïlande</p>
-      <h1 class="hero-title">Balou<br /><em>Tattoo</em></h1>
-      <p class="hero-sub">Mandala · Géométrique · Ornamental<br />Créateur d'histoires éternelles</p>
-      <div class="hero-actions">
-        <a href="#booking" class="btn btn-primary">Prendre rendez-vous</a>
-        <a href="#gallery" class="btn btn-ghost">Voir le travail</a>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <p class="header-label">Balou Tattoo · Paris &amp; Thaïlande</p>
+      <h1>Balou Tattoo Ink</h1>
+      <p class="header-sub">Mandala · Ornamental · Géométrique · Grand Format</p>
+      <p class="header-desc">Parcours mes réalisations et mes inspirations pour que ton projet prenne forme. Quand tu as une idée, je suis là.</p>
+      <div class="header-actions">
+        <a href="#booking" class="cta-btn">Réserver une séance</a>
+        <a href="#realisations" class="cta-btn-outline">Voir le travail</a>
       </div>
     </div>
-    <a href="#gallery" class="scroll-hint" aria-label="Défiler vers le bas">
-      <span class="scroll-line"></span>
-    </a>
-  </section>
+  </header>
 
-  <!-- STATS -->
-  <section class="stats">
-    <div class="stats-grid">
-      <div class="stat">
-        <span class="stat-num">41K+</span>
-        <span class="stat-label">Followers Instagram</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">124</span>
-        <span class="stat-label">Publications</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">10+</span>
-        <span class="stat-label">Ans d'expérience</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">2</span>
-        <span class="stat-label">Continents</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERIE INSTAGRAM -->
-  <section class="gallery" id="gallery">
+  <!-- SECTION 01 — MES RÉALISATIONS -->
+  <section id="realisations">
     <div class="section-header">
-      <h2 class="section-title">Galerie</h2>
-      <p class="section-sub">
-        <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener" style="color:var(--accent)">@balou_tattoo.ink</a>
-        · Mis à jour automatiquement
-      </p>
+      <span class="section-tag">01</span>
+      <h2>Mes réalisations</h2>
+      <p>Mes derniers tatouages — Paris &amp; Thaïlande. Clique sur une photo pour l'agrandir.</p>
     </div>
-    <div class="ig-grid" id="igGrid">
-      <div class="ig-loading">Chargement des posts...</div>
+    <div class="ig-grid" id="ig-grid">
+      <div class="ig-loading"><span>Chargement du feed Instagram...</span></div>
     </div>
-    <div style="text-align:center;margin-top:2.5rem">
-      <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener" class="btn btn-ghost">
-        Voir tous les posts →
+    <div class="ig-footer">
+      <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener" class="cta-btn-outline">
+        Voir tout sur Instagram →
       </a>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-inner">
-      <div class="about-img">
-        <div class="about-img-frame">
-          <img src="images/balou-portrait.jpg" alt="Balou, tatoueur Paris Thaïlande" />
-        </div>
+  <!-- LIGHTBOX INSTAGRAM -->
+  <div id="lightbox">
+    <button id="lb-close">✕</button>
+    <button id="lb-prev">‹</button>
+    <img id="lb-img" src="" alt="" />
+    <button id="lb-next">›</button>
+  </div>
+
+  <!-- SECTION 02 — PHOTOS D'INSPIRATION -->
+  <section id="inspirations">
+    <div class="section-header">
+      <span class="section-tag">02</span>
+      <h2>Photos d'inspiration</h2>
+      <p>Ma sélection de références — mandalas ornementaux, fine line, dotwork, grand format. Montre-moi ce qui t'attire.</p>
+    </div>
+    <div class="gallery-pint" id="gallery-pint">
+      <!-- Chargé dynamiquement -->
+    </div>
+  </section>
+
+  <!-- SECTION 03 — RÉFÉRENCES VECTORIELLES -->
+  <section id="references">
+    <div class="section-header">
+      <span class="section-tag">03</span>
+      <h2>Styles de référence</h2>
+      <p>Designs vectoriels représentant les grandes familles de mandala. Indique-moi ce qui t'attire.</p>
+    </div>
+    <div class="ref-grid" id="references-section">
+      <!-- Chargé dynamiquement -->
+    </div>
+  </section>
+
+  <!-- SECTION 04 — CE QUE JE FAIS -->
+  <section id="styles">
+    <div class="section-header">
+      <span class="section-tag">04</span>
+      <h2>Ce que je fais</h2>
+      <p>Mes spécialités pour t'aider à choisir la direction de ton projet.</p>
+    </div>
+    <div class="styles-grid">
+      <div class="style-card">
+        <div class="style-icon">◎</div>
+        <h3>Mandala pur</h3>
+        <p>Symétrie parfaite, lignes fines, motif central rayonnant.</p>
       </div>
-      <div class="about-text">
-        <h2 class="section-title">À propos</h2>
-        <p class="about-bio">
-          Tatoueur par passion, je crée des œuvres permanentes qui racontent une histoire — la tienne.
-          Spécialisé en mandala, géométrique et ornamental, je travaille principalement sur de grands formats :
-          dos complets, manches, pièces de corps.
-        </p>
-        <p class="about-bio">
-          Basé entre <strong>Paris</strong> et la <strong>Thaïlande</strong>, je reçois sur rendez-vous.
-          Chaque projet est unique, pensé et dessiné spécialement pour vous.
-        </p>
-        <div class="about-tags">
-          <span class="tag">Mandala</span>
-          <span class="tag">Géométrique</span>
-          <span class="tag">Ornamental</span>
-          <span class="tag">Grand Format</span>
-          <span class="tag">Sur-mesure</span>
-        </div>
-        <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener" class="btn btn-ghost" style="margin-top:2rem">
-          @balou_tattoo.ink
-        </a>
+      <div class="style-card">
+        <div class="style-icon">❋</div>
+        <h3>Ornamental</h3>
+        <p>Détails floraux, arabesques, dentelle. Élégance maximale.</p>
+      </div>
+      <div class="style-card">
+        <div class="style-icon">◇</div>
+        <h3>Géométrique</h3>
+        <p>Formes épurées, précision mathématique, minimalisme fort.</p>
+      </div>
+      <div class="style-card">
+        <div class="style-icon">▲</div>
+        <h3>Grand format</h3>
+        <p>Dos, cuisse, manchette complète. Les pièces maîtresses.</p>
       </div>
     </div>
   </section>
 
-  <!-- BOOKING -->
-  <section class="booking" id="booking">
+  <!-- SECTION 05 — BOOKING -->
+  <section id="booking">
+    <div class="section-header">
+      <span class="section-tag">05</span>
+      <h2>Réserver une séance</h2>
+      <p>Décris-moi ton projet. Chaque tatouage commence par une conversation.</p>
+    </div>
     <div class="booking-inner">
-      <div class="booking-text">
-        <p class="hero-eyebrow">Booking Ouvert</p>
-        <h2 class="section-title">Réservez<br /><em>votre séance</em></h2>
-        <p class="booking-sub">
-          Vous avez un projet en tête ? Décrivez-le moi.
-          Chaque tatouage commence par une conversation — partagez votre vision,
-          votre placement, et nous cocréerons quelque chose d'unique.
-        </p>
-        <ul class="booking-infos">
-          <li><span class="bi-icon">📍</span> Paris &amp; Thaïlande</li>
-          <li><span class="bi-icon">⏱</span> Réponse sous 48h</li>
-          <li><span class="bi-icon">✏️</span> Design 100% sur-mesure</li>
-        </ul>
+      <div class="booking-infos">
+        <div class="bi-item"><span class="bi-icon">📍</span><span>Paris &amp; Thaïlande</span></div>
+        <div class="bi-item"><span class="bi-icon">⏱</span><span>Réponse sous 48h</span></div>
+        <div class="bi-item"><span class="bi-icon">✏️</span><span>Design 100% sur-mesure</span></div>
+        <div class="bi-item"><span class="bi-icon">📸</span><span><a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener">@balou_tattoo.ink</a></span></div>
       </div>
       <form class="booking-form" id="bookingForm"
             action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
@@ -212,30 +212,27 @@
           <label for="message">Votre projet</label>
           <textarea id="message" name="message" rows="4" placeholder="Décrivez votre projet, vos inspirations, vos contraintes..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%">Envoyer ma demande</button>
-        <p class="form-note">Ou contactez directement sur Instagram : <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener">@balou_tattoo.ink</a></p>
+        <button type="submit" class="cta-btn" style="width:100%;border:none;cursor:pointer;">Envoyer ma demande</button>
+        <p class="form-note">Ou directement sur Instagram : <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener">@balou_tattoo.ink</a></p>
       </form>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="footer-logo">BALOU TATTOO</span>
-        <p>Mandala · Géométrique · Ornamental<br />Paris · Thaïlande</p>
-      </div>
-      <div class="footer-links">
-        <a href="#gallery">Galerie</a>
-        <a href="#about">À propos</a>
-        <a href="#booking">Booking</a>
-        <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener">Instagram</a>
-      </div>
-      <div class="footer-copy">
-        <p>© 2026 Balou Tattoo · Tous droits réservés</p>
-        <p>Créateur d'histoires éternelles</p>
+  <!-- CTA FINAL -->
+  <section id="contact">
+    <div class="cta-block">
+      <h2>Tu sais ce que tu veux ?</h2>
+      <p>Parle-moi de ton projet. On crée ensemble un design 100% sur-mesure.</p>
+      <div class="cta-buttons">
+        <a href="#booking" class="cta-btn">Réserver une séance</a>
+        <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener" class="cta-btn-outline">Voir Instagram</a>
       </div>
     </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Balou Tattoo · Paris &amp; Thaïlande · <a href="https://www.instagram.com/balou_tattoo.ink/" target="_blank" rel="noopener">@balou_tattoo.ink</a></p>
   </footer>
 
   <script src="script.js"></script>
