@@ -5,6 +5,17 @@ Thumbs.db
 # Vercel (local seulement, on garde .vercel/project.json pour le lien)
 .vercel/README.txt
 
+# Médias lourds (vidéos sources, RAW) — à mettre sur un service dédié
+*.mov
+*.mp4
+*.avi
+*.mkv
+
+# Assets à ajouter manuellement (voir README)
+# images/balou-portrait.jpg
+# images/hero-poster.jpg
+# images/og-cover.jpg
+
 # Fichiers à ne jamais committer
 *.env
 *.local
