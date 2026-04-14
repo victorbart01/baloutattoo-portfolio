@@ -5,16 +5,16 @@ Thumbs.db
 # Vercel (local seulement, on garde .vercel/project.json pour le lien)
 .vercel/README.txt
 
-# Médias lourds (vidéos sources, RAW) — à mettre sur un service dédié
+# Médias lourds (sources originales, RAW) — à mettre sur un service dédié
 *.mov
-*.mp4
 *.avi
 *.mkv
+*.mp4
+# Exception : hero.mp4 optimisé (<3 Mo) est versionné
+!hero.mp4
 
-# Assets à ajouter manuellement (voir README)
-# images/balou-portrait.jpg
-# images/hero-poster.jpg
-# images/og-cover.jpg
+# Assets à ajouter manuellement
+# images/balou-portrait.jpg (portrait de Balou, ratio 3:4)
 
 # Fichiers à ne jamais committer
 *.env
