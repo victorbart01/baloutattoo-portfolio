@@ -1,0 +1,10 @@
+# Système
+.DS_Store
+Thumbs.db
+
+# Vercel (local seulement, on garde .vercel/project.json pour le lien)
+.vercel/README.txt
+
+# Fichiers à ne jamais committer
+*.env
+*.local
